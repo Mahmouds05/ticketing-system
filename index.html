@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -119,12 +119,29 @@
             document.getElementById('btnInq').className = cat === 'استفسار' ? 'flex-1 p-2 rounded-md font-bold transition bg-white shadow-sm text-blue-600' : 'flex-1 p-2 rounded-md font-bold transition text-gray-500';
         };
 
-        window.handleLogin = async () => {
-            const email = document.getElementById('loginEmail').value;
-            const pass = document.getElementById('loginPass').value;
-            try { await signInWithEmailAndPassword(auth, email, pass); } 
-            catch (e) { alert("خطأ في بيانات الدخول"); }
-        };
+        // لازم نربط الوظيفة بالـ window عشان الـ HTML يشوفها
+window.handleLogin = async () => {
+    const email = document.getElementById('loginEmail').value;
+    const pass = document.getElementById('loginPass').value;
+
+    if (!email || !pass) {
+        alert("يا ريس اكتب الايميل والباسورد الأول!");
+        return;
+    }
+
+    try {
+        console.log("Attempting login...");
+        await signInWithEmailAndPassword(auth, email, pass);
+        alert("دخلت بنجاح!");
+    } catch (error) {
+        console.error("Login error:", error);
+        if (error.code === 'auth/unauthorized-domain') {
+            alert("خطأ: لازم تضيف الدومين mahmouds05.github.io في إعدادات فايربيز");
+        } else {
+            alert("بيانات الدخول غلط أو فيه مشكلة في الشبكة");
+        }
+    }
+};
 
         window.handleLogout = () => signOut(auth);
 
