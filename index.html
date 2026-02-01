@@ -3,110 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام إدارة التيكتات - الاحترافي</title>
+    <title>نظام إدارة التيكتات المطور</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Cairo', sans-serif; }
-        /* نستخدم display none بشكل صريح للتحكم الكامل من الـ JS */
         .page { display: none; }
         .page.active { display: block; }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-slate-50">
 
     <div id="loginPage" class="page active min-h-screen flex items-center justify-center p-4">
-        <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-gray-100">
-            <div class="text-center mb-8">
-                <div class="bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center text-white text-3xl mx-auto mb-4">🔐</div>
-                <h2 class="text-2xl font-bold text-gray-800">دخول الموظفين</h2>
-                <p class="text-gray-500 text-sm mt-2">يرجى تسجيل الدخول للبدء في إدارة الطلبات</p>
-            </div>
+        <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border">
+            <h2 class="text-2xl font-bold text-center mb-6 text-blue-700">دخول الموظفين</h2>
             <div class="space-y-4">
-                <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all">
-                <input type="password" id="loginPass" placeholder="كلمة المرور" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all">
-                <button onclick="handleLogin()" class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all active:scale-95">تسجيل الدخول</button>
+                <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="password" id="loginPass" placeholder="كلمة المرور" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
+                <button onclick="handleLogin()" class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold hover:bg-blue-700 transition">دخول</button>
             </div>
         </div>
     </div>
 
     <div id="mainPage" class="page">
-        <nav class="bg-white shadow-sm p-4 flex justify-between items-center px-6 md:px-12 border-b sticky top-0 z-50">
-            <div class="flex items-center gap-2">
-                <span class="text-2xl">🎫</span>
-                <h1 class="text-xl font-extrabold text-blue-800 tracking-tight">سيستم التيكتات</h1>
-            </div>
-            <div class="flex items-center gap-4">
-                <div class="text-right hidden sm:block">
-                    <p id="userDisp" class="text-gray-800 font-bold text-xs"></p>
-                    <p class="text-[10px] text-green-500 font-bold">متصل الآن</p>
-                </div>
-                <button onclick="handleLogout()" class="bg-red-50 text-red-600 text-xs font-bold px-4 py-2 rounded-lg hover:bg-red-500 hover:text-white transition-all">خروج</button>
+        <nav class="bg-white shadow-sm p-4 flex justify-between items-center px-10 border-b">
+            <h1 class="text-xl font-extrabold text-blue-800">نظام إدارة العمليات</h1>
+            <div class="flex items-center gap-4 text-xs font-bold">
+                <span id="userDisp" class="text-gray-500"></span>
+                <button onclick="handleLogout()" class="text-red-500 hover:underline">خروج</button>
             </div>
         </nav>
 
         <main class="container mx-auto p-4 md:p-8 grid lg:grid-cols-2 gap-8">
-            
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h2 class="text-lg font-bold mb-6 flex items-center gap-2 text-gray-800">
-                    <span class="bg-blue-100 text-blue-600 p-2 rounded-lg text-sm">📝</span> إنشاء تيكت جديد
-                </h2>
-                
-                <div class="space-y-5">
-                    <div class="flex gap-2 p-1.5 bg-gray-100 rounded-xl">
-                        <button id="btnNew" onclick="setCategory('طلب جديد')" class="flex-1 py-2.5 rounded-lg font-bold transition-all bg-white shadow-sm text-blue-600">طلب جديد</button>
-                        <button id="btnInq" onclick="setCategory('استفسار')" class="flex-1 py-2.5 rounded-lg font-bold transition-all text-gray-500">استفسار</button>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border">
+                <h2 class="text-lg font-bold mb-6 flex items-center gap-2">📝 تيكت جديد</h2>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="number" id="custNumber" placeholder="رقم العميل (Number)" class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:border-blue-500">
+                        <input type="text" id="custName" placeholder="اسم العميل (Name)" class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:border-blue-500">
                     </div>
 
-                    <div>
-                        <label class="block text-xs font-bold text-gray-400 mb-1 px-1">رقم موبايل العميل</label>
-                        <input type="tel" id="custMobile" placeholder="01XXXXXXXXX" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-blue-500">
-                    </div>
-                    
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-gray-400 mb-1 px-1">النوع الفرعي</label>
-                            <select id="subCat" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none">
-                                <option value="طلب جديد">طلب جديد</option>
-                                <option value="متابعة">متابعة</option>
-                                <option value="تعديل">تعديل</option>
+                            <label class="text-[10px] font-bold text-gray-400">الفئة (Category)</label>
+                            <select id="mainCat" onchange="updateSubCats()" class="w-full p-3 bg-gray-50 border rounded-xl outline-none">
+                                <option value="">اختر الفئة</option>
+                                <option value="New Order">New Order</option>
+                                <option value="Inquiry">استفسار (Inquiry)</option>
+                                <option value="Follow-Up Order">Follow-Up Order</option>
+                                <option value="Complaint">شكوى (Complaint)</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-400 mb-1 px-1">الفرع</label>
-                            <select id="branch" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none">
-                                <option value="بازوكا">بازوكا</option>
-                                <option value="ماك">ماك</option>
+                            <label class="text-[10px] font-bold text-gray-400">الفئة الفرعية</label>
+                            <select id="subCat" onchange="updateItems()" class="w-full p-3 bg-gray-50 border rounded-xl outline-none"></select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400">البند (Item)</label>
+                            <select id="itemCat" class="w-full p-3 bg-gray-50 border rounded-xl outline-none"></select>
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400">الفرع (Store)</label>
+                            <select id="storeLoc" class="w-full p-3 bg-gray-50 border rounded-xl outline-none">
+                                <option value="الدقي">الدقي</option><option value="مدينة نصر">مدينة نصر</option>
+                                <option value="المعادي">المعادي (Hub 50)</option><option value="التجمع الأول">التجمع الأول</option>
+                                <option value="إسكندرية">إسكندرية (سبورتنج)</option><option value="الشيخ زايد">الشيخ زايد</option>
+                                <option value="شبين الكوم">شبين الكوم</option><option value="إسكندرية">إسكندرية (ميامي)</option>
+                                <option value="الزمالك">الالزمالك</option><option value="المعادي">المعادي (فيكتوريا)</option>
+                                <option value="المنصورة">المنصورة (جامعة المنصورة)</option><option value="فيصل">فيصل</option>
+                                <option value="طنطا">طنطا</option><option value="العبور">العبور</option>
+                                <option value="حدائق أكتوبر">حدائق أكتوبر</option><option value="شيراتون">شيراتون</option>
+                                <option value="سوهاج">سوهاج</option>
                             </select>
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-gray-400 mb-1 px-1">الوصف والتفاصيل</label>
-                        <textarea id="desc" placeholder="اكتب تفاصيل الطلب هنا..." class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl h-32 outline-none focus:border-blue-500 resize-none"></textarea>
+                        <label class="text-[10px] font-bold text-gray-400">المنتج (Product)</label>
+                        <input type="text" id="productName" placeholder="اسم المنتج (إلزامي في شكاوى الجودة فقط)" class="w-full p-3 bg-gray-50 border rounded-xl outline-none">
                     </div>
 
-                    <button onclick="submitTicket()" id="submitBtn" class="w-full bg-green-600 text-white p-4 rounded-xl font-bold hover:bg-green-700 shadow-lg shadow-green-100 transition-all active:scale-95">إرسال التيكت (Submit)</button>
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-400">وصف العميل (VOC)</label>
+                        <textarea id="vocDesc" placeholder="اكتب تفاصيل الطلب أو الشكوى هنا..." class="w-full p-3 bg-gray-50 border rounded-xl h-24 outline-none focus:border-blue-500 resize-none"></textarea>
+                    </div>
+
+                    <button onclick="submitTicket()" id="submitBtn" class="w-full bg-green-600 text-white p-4 rounded-xl font-bold hover:bg-green-700 transition active:scale-95">حفظ الطلب (Submit)</button>
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col">
-                <h2 class="text-lg font-bold mb-6 flex items-center gap-2 text-gray-800">
-                    <span class="bg-orange-100 text-orange-600 p-2 rounded-lg text-sm">🔍</span> بحث ومتابعة التاريخ
-                </h2>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border flex flex-col">
+                <h2 class="text-lg font-bold mb-6 flex items-center gap-2">🔍 بحث برقم الموبايل</h2>
                 <div class="flex gap-2 mb-6">
-                    <input type="tel" id="searchMobile" placeholder="ابحث برقم موبايل العميل..." class="flex-1 p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-orange-400">
-                    <button onclick="searchTickets()" class="bg-gray-800 text-white px-8 rounded-xl hover:bg-black transition-all font-bold">بحث</button>
+                    <input type="tel" id="searchMobile" placeholder="رقم الموبايل..." class="flex-1 p-3 bg-gray-50 border rounded-xl outline-none focus:border-blue-500">
+                    <button onclick="searchTickets()" class="bg-slate-800 text-white px-8 rounded-xl font-bold hover:bg-black transition">بحث</button>
                 </div>
-
-                <div id="searchResults" class="space-y-4 overflow-y-auto max-h-[600px] flex-1 pr-1 custom-scrollbar">
-                    <div class="text-center py-20">
-                        <p class="text-3xl mb-2">🔎</p>
-                        <p class="text-gray-400 text-sm">أدخل رقم الموبايل لعرض تاريخ التيكتات</p>
-                    </div>
+                <div id="searchResults" class="space-y-4 overflow-y-auto max-h-[600px] flex-1 pr-1">
+                    <p class="text-center text-gray-400 py-20 text-sm">أدخل رقم الموبايل لعرض النتائج</p>
                 </div>
             </div>
-
         </main>
     </div>
 
@@ -115,158 +113,120 @@
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, where, getDocs, serverTimestamp, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // إعدادات مشروعك
         const firebaseConfig = {
             apiKey: "AIzaSyCn_Bg2B_bYyo1lqbiaIq9TZSvmeMWWaFY",
             authDomain: "my-ticketing-system-fef69.firebaseapp.com",
             projectId: "my-ticketing-system-fef69",
             storageBucket: "my-ticketing-system-fef69.firebasestorage.app",
             messagingSenderId: "180604352951",
-            appId: "1:180604352951:web:54c10ac8d5f86cbe3a5032",
-            measurementId: "G-F330HDVMJQ"
+            appId: "1:180604352951:web:54c10ac8d5f86cbe3a5032"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        let currentCategory = "طلب جديد";
+        const dataTree = {
+            "New Order": { subs: ["Delivery", "Store-Pickup"], items: ["Delivery", "Store-Pickup"] },
+            "Inquiry": { subs: ["Inquiry"], items: ["Inquiry"] },
+            "Follow-Up Order": { subs: ["Follow-Up Order"], items: ["Follow-Up Order"] },
+            "Complaint": { subs: ["Product Quality", "Delivery Lateness", "Missing Item", "Wrong Item", "Attitude"], items: ["Store", "Delivery", "Call Center"] }
+        };
 
-        // وظيفة التنقل بين الصفحات (تم تعديلها لتعمل بدقة)
-        function showPage(pageId) {
-            console.log("Switching to page:", pageId);
-            document.querySelectorAll('.page').forEach(p => {
-                p.style.display = 'none';
-                p.classList.remove('active');
-            });
-            const target = document.getElementById(pageId);
-            if (target) {
-                target.style.display = (pageId === 'loginPage') ? 'flex' : 'block';
-                target.classList.add('active');
+        window.updateSubCats = () => {
+            const main = document.getElementById('mainCat').value;
+            const sub = document.getElementById('subCat');
+            sub.innerHTML = '<option value="">اختر الفئة الفرعية</option>';
+            if(main && dataTree[main]) {
+                dataTree[main].subs.forEach(s => sub.innerHTML += `<option value="${s}">${s}</option>`);
             }
-        }
+            updateItems();
+        };
 
-        // مراقب حالة الدخول
+        window.updateItems = () => {
+            const main = document.getElementById('mainCat').value;
+            const itemSel = document.getElementById('itemCat');
+            itemSel.innerHTML = '<option value="">اختر البند</option>';
+            if(main && dataTree[main]) {
+                dataTree[main].items.forEach(i => itemSel.innerHTML += `<option value="${i}">${i}</option>`);
+            }
+        };
+
         onAuthStateChanged(auth, (user) => {
-            if (user) {
-                console.log("User detected:", user.email);
-                showPage('mainPage');
-                document.getElementById('userDisp').innerText = user.email;
-            } else {
-                console.log("No user detected");
-                showPage('loginPage');
-            }
+            if (user) { showPage('mainPage'); document.getElementById('userDisp').innerText = user.email; } 
+            else { showPage('loginPage'); }
         });
 
-        // ربط الوظائف بالـ Window لتعمل من الـ HTML
         window.handleLogin = async () => {
             const email = document.getElementById('loginEmail').value;
             const pass = document.getElementById('loginPass').value;
-            if(!email || !pass) return alert("يرجى كتابة البريد وكلمة المرور");
-
-            try {
-                console.log("Attempting login...");
-                await signInWithEmailAndPassword(auth, email, pass);
-            } catch (e) {
-                console.error(e);
-                alert("خطأ في الدخول: " + e.message);
-            }
+            try { await signInWithEmailAndPassword(auth, email, pass); } catch (e) { alert("خطأ في الدخول"); }
         };
 
-        window.handleLogout = () => {
-            if(confirm("هل تريد تسجيل الخروج؟")) signOut(auth);
-        };
-
-        window.setCategory = (cat) => {
-            currentCategory = cat;
-            const isNew = cat === 'طلب جديد';
-            document.getElementById('btnNew').className = isNew ? 'flex-1 py-2.5 rounded-lg font-bold transition-all bg-white shadow-sm text-blue-600' : 'flex-1 py-2.5 rounded-lg font-bold transition-all text-gray-500';
-            document.getElementById('btnInq').className = !isNew ? 'flex-1 py-2.5 rounded-lg font-bold transition-all bg-white shadow-sm text-blue-600' : 'flex-1 py-2.5 rounded-lg font-bold transition-all text-gray-500';
-        };
+        window.handleLogout = () => signOut(auth);
 
         window.submitTicket = async () => {
-            const mobile = document.getElementById('custMobile').value.trim();
-            const subCat = document.getElementById('subCat').value;
-            const branch = document.getElementById('branch').value;
-            const desc = document.getElementById('desc').value.trim();
+            const num = document.getElementById('custNumber').value;
+            const name = document.getElementById('custName').value;
+            const main = document.getElementById('mainCat').value;
+            const sub = document.getElementById('subCat').value;
+            const item = document.getElementById('itemCat').value;
+            const store = document.getElementById('storeLoc').value;
+            const product = document.getElementById('productName').value;
+            const voc = document.getElementById('vocDesc').value;
 
-            if(!mobile || !desc) return alert("يرجى ملء رقم الموبايل والوصف");
+            // التحقق من القواعد (Validation من الصورة)
+            if(!num || !name || !main || !sub || !item) return alert("يرجى إكمال البيانات الأساسية");
+            if(main === "Complaint" && !voc) return alert("في حالة الشكوى، حقل VOC إلزامي!");
+            if(sub === "Product Quality" && !product) return alert("في شكاوى جودة المنتج، حقل المنتج إلزامي!");
 
             const btn = document.getElementById('submitBtn');
-            btn.disabled = true;
-            btn.innerText = "جاري الحفظ...";
+            btn.disabled = true; btn.innerText = "جاري الحفظ...";
 
             try {
                 await addDoc(collection(db, "tickets"), {
-                    mobile,
-                    category: currentCategory,
-                    subCategory: subCat,
-                    branch,
-                    description: desc,
-                    createdBy: auth.currentUser.email,
-                    timestamp: serverTimestamp()
+                    number: num, name, category: main, subCategory: sub, item, store, product, voc,
+                    createdBy: auth.currentUser.email, timestamp: serverTimestamp()
                 });
-                alert("✅ تم تسجيل التيكت بنجاح");
-                document.getElementById('custMobile').value = '';
-                document.getElementById('desc').value = '';
-            } catch (e) {
-                console.error(e);
-                alert("حدث خطأ أثناء الحفظ: " + e.message);
-            }
-            btn.disabled = false;
-            btn.innerText = "إرسال التيكت (Submit)";
+                alert("تم تسجيل التيكت بنجاح ✅");
+                document.getElementById('custNumber').value = ''; document.getElementById('vocDesc').value = '';
+            } catch (e) { alert("حدث خطأ"); }
+            btn.disabled = false; btn.innerText = "حفظ الطلب (Submit)";
         };
 
         window.searchTickets = async () => {
-            const phone = document.getElementById('searchMobile').value.trim();
-            if(!phone) return alert("يرجى إدخال رقم الموبايل للبحث");
-            
+            const phone = document.getElementById('searchMobile').value;
+            if(!phone) return;
             const resultsDiv = document.getElementById('searchResults');
-            resultsDiv.innerHTML = `
-                <div class="text-center py-10">
-                    <div class="animate-spin text-2xl mb-2">⏳</div>
-                    <p class="text-gray-500 text-sm">جاري البحث عن سجل العميل...</p>
-                </div>
-            `;
-
+            resultsDiv.innerHTML = "جاري البحث...";
             try {
-                const q = query(collection(db, "tickets"), where("mobile", "==", phone), orderBy("timestamp", "desc"));
+                const q = query(collection(db, "tickets"), where("number", "==", phone), orderBy("timestamp", "desc"));
                 const snapshot = await getDocs(q);
-                
                 resultsDiv.innerHTML = '';
-                if(snapshot.empty) {
-                    resultsDiv.innerHTML = '<div class="bg-red-50 text-red-500 p-4 rounded-xl text-center text-sm font-bold border border-red-100">لا توجد سجلات سابقة لهذا الرقم</div>';
-                    return;
-                }
-
+                if(snapshot.empty) return resultsDiv.innerHTML = '<p class="text-center text-red-500">لا يوجد سجلات</p>';
                 snapshot.forEach(doc => {
-                    const data = doc.data();
-                    const date = data.timestamp?.toDate().toLocaleString('ar-EG') || 'لحظات...';
+                    const d = doc.data();
                     resultsDiv.innerHTML += `
-                        <div class="bg-white border border-gray-100 p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow border-r-4 border-r-blue-500">
-                            <div class="flex justify-between items-start mb-3">
-                                <div>
-                                    <span class="bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">${data.category}</span>
-                                    <h4 class="font-bold text-gray-800 mt-1">${data.subCategory}</h4>
-                                </div>
-                                <span class="text-[10px] text-gray-400 bg-gray-50 px-2 py-1 rounded border">${date}</span>
+                        <div class="bg-white border-r-4 border-blue-500 p-4 rounded-xl shadow-sm mb-3">
+                            <div class="flex justify-between text-[10px] mb-1 font-bold">
+                                <span class="text-blue-600">${d.category} - ${d.subCategory}</span>
+                                <span class="text-gray-400">${d.timestamp?.toDate().toLocaleString('ar-EG')}</span>
                             </div>
-                            <p class="text-sm text-gray-600 leading-relaxed mb-4 bg-gray-50 p-3 rounded-lg">${data.description}</p>
-                            <div class="flex justify-between items-center text-[10px] font-bold text-gray-400 pt-3 border-t border-dashed">
-                                <span class="flex items-center gap-1">📍 فرع ${data.branch}</span>
-                                <span class="flex items-center gap-1">👤 ${data.createdBy}</span>
+                            <p class="text-sm font-bold text-gray-800 mb-1">${d.name} (${d.number})</p>
+                            <p class="text-xs text-gray-600 bg-slate-50 p-2 rounded">${d.voc || 'بدون وصف'}</p>
+                            <div class="flex justify-between text-[10px] mt-2 text-gray-400 border-t pt-1">
+                                <span>📍 ${d.store} | صنف: ${d.product || '-'}</span>
+                                <span>بواسطة: ${d.createdBy}</span>
                             </div>
-                        </div>
-                    `;
+                        </div>`;
                 });
-            } catch (e) {
-                console.error(e);
-                resultsDiv.innerHTML = `<p class="text-red-500 text-center text-xs">حدث خطأ: ${e.message}</p>`;
-                if(e.message.includes("index")) {
-                    alert("نظام البحث يحتاج لتفعيل الـ Index في فايربيز. اضغط على الرابط في الـ Console (F12) لتفعيله.");
-                }
-            }
+            } catch (e) { alert("حدث خطأ في البحث. تأكد من تفعيل الـ Index"); }
         };
+
+        function showPage(p) {
+            document.querySelectorAll('.page').forEach(pg => pg.style.display = 'none');
+            document.getElementById(p).style.display = (p === 'loginPage') ? 'flex' : 'block';
+        }
     </script>
 </body>
 </html>
