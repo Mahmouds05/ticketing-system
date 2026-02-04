@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام الإدارة - صلاحيات متقدمة</title>
+    <title>نظام إدارة العمليات - الإصدار المطور</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -11,14 +11,16 @@
         .sidebar-btn.active { background-color: #1e3a8a; color: white; border-right: 4px solid #facc15; }
         .page { display: none; }
         .page.active { display: flex; }
-        .admin-only { display: none; } /* مخفي افتراضياً */
+        .admin-only { display: none; }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 </head>
 <body class="bg-slate-100 h-screen flex">
 
     <div id="loginPage" class="page active w-full items-center justify-center">
         <div class="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-md border">
-            <h2 class="text-3xl font-black text-center mb-8 text-blue-900">نظام الإدارة</h2>
+            <h2 class="text-3xl font-black text-center mb-8 text-blue-900 italic">SYSTEM LOGIN</h2>
             <div class="space-y-4">
                 <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" class="w-full p-4 border rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 bg-gray-50">
                 <input type="password" id="loginPass" placeholder="كلمة المرور" class="w-full p-4 border rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 bg-gray-50">
@@ -31,13 +33,13 @@
         
         <aside class="w-64 bg-white shadow-2xl border-l flex flex-col z-10">
             <div class="p-6 border-b text-center bg-blue-900 text-white">
-                <h1 class="text-xl font-black">لوحة التحكم</h1>
-                <p id="userRoleBadge" class="text-[10px] mt-1 text-blue-200 font-bold uppercase"></p>
+                <h1 class="text-xl font-black tracking-tighter">DASHBOARD</h1>
+                <p id="userRoleBadge" class="text-[10px] mt-1 text-blue-200 font-bold uppercase tracking-widest"></p>
             </div>
             <nav class="flex-1 p-4 space-y-2 mt-4">
-                <button onclick="switchTab('New Order')" class="sidebar-btn active w-full text-right p-4 rounded-xl font-bold flex items-center gap-3 transition" id="btn-NewOrder">➕ طلب جديد</button>
+                <button onclick="switchTab('New Order')" class="sidebar-btn w-full text-right p-4 rounded-xl font-bold flex items-center gap-3 transition" id="btn-NewOrder">➕ طلب جديد</button>
                 <button onclick="switchTab('Inquiry')" class="sidebar-btn w-full text-right p-4 rounded-xl font-bold flex items-center gap-3 transition" id="btn-Inquiry">ℹ️ استفسار</button>
-                <button onclick="switchTab('Follow-Up Order')" class="sidebar-btn w-full text-right p-4 rounded-xl font-bold flex items-center gap-3 transition" id="btn-FollowUp">⏳ متابعة طلب</button>
+                <button onclick="switchTab('Follow-Up Order')" class="sidebar-btn w-full text-right p-4 rounded-xl font-bold flex items-center gap-3 transition" id="btn-FollowUpOrder">⏳ متابعة طلب</button>
                 <button onclick="switchTab('Complaint')" class="sidebar-btn w-full text-right p-4 rounded-xl font-bold flex items-center gap-3 transition" id="btn-Complaint">⚠️ شكوى</button>
             </nav>
             <div class="p-4 border-t bg-gray-50 flex flex-col gap-2">
@@ -48,9 +50,9 @@
 
         <section class="flex-1 flex flex-col overflow-hidden">
             <header class="bg-white p-4 px-8 shadow-sm flex justify-between items-center border-b">
-                <h2 id="currentPageTitle" class="text-xl font-black text-gray-800 tracking-tight">إنشاء طلب جديد</h2>
+                <h2 id="currentPageTitle" class="text-xl font-black text-gray-800">إنشاء طلب جديد</h2>
                 <div class="flex gap-2">
-                    <input type="tel" id="searchMobile" placeholder="رقم العميل..." class="p-3 border rounded-xl text-xs w-48 outline-none focus:border-blue-600">
+                    <input type="tel" id="searchMobile" placeholder="بحث برقم العميل..." class="p-3 border rounded-xl text-xs w-48 outline-none focus:border-blue-600">
                     <button onclick="searchTickets()" class="bg-blue-900 text-white px-6 rounded-xl text-xs font-bold hover:bg-black transition">بحث</button>
                 </div>
             </header>
@@ -58,33 +60,37 @@
             <div class="flex-1 p-8 overflow-y-auto flex gap-8">
                 <div class="bg-white p-8 rounded-3xl shadow-md border border-gray-100 w-full max-w-2xl h-fit">
                     <div class="space-y-6">
+                        
+                        <div id="topNoteField" class="hidden bg-orange-50 p-4 rounded-2xl border border-orange-100">
+                            <label class="block text-[10px] font-bold text-orange-600 mb-2 uppercase italic">Add Internal Note (Top Priority)</label>
+                            <input type="text" id="internalNote" placeholder="اكتب ملاحظة تظهر فوق التيكت..." class="w-full p-3 bg-white border border-orange-200 rounded-xl outline-none focus:ring-2 focus:ring-orange-400">
+                        </div>
+
                         <div class="grid grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-[10px] font-bold text-gray-400 mb-2 uppercase">رقم العميل</label>
-                                <input type="text" id="custNumber" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="ارقام فقط" class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:border-blue-600 font-bold">
+                                <input type="text" id="custNumber" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="ارقام فقط" class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:border-blue-600 font-bold text-lg">
                             </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-gray-400 mb-2 uppercase">اسم العميل</label>
-                                <input type="text" id="custName" oninput="this.value = this.value.replace(/[0-9]/g, '')" placeholder="حروف فقط" class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:border-blue-600">
+                                <input type="text" id="custName" oninput="this.value = this.value.replace(/[0-9]/g, '')" placeholder="حروف فقط" class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:border-blue-600 font-bold">
                             </div>
                         </div>
 
-                        <div id="complaintFields" class="space-y-6 hidden border-t pt-6">
+                        <div id="adminSection" class="admin-only space-y-4 border-t pt-4">
                             <div class="grid grid-cols-2 gap-6">
-                                <div class="admin-only"> <label class="block text-[10px] font-bold text-blue-600 mb-2 uppercase">Handled By (Admin)</label>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-blue-600 mb-2 uppercase">Handled By</label>
                                     <select id="handledBy" class="w-full p-3 bg-blue-50 border border-blue-200 rounded-xl outline-none">
                                         <option value="None">لم يحدد</option>
                                         <option value="Ahmed">Ahmed</option>
                                         <option value="Mahmoud">Mahmoud</option>
                                     </select>
                                 </div>
-                                <div class="admin-only"> <label class="block text-[10px] font-bold text-blue-600 mb-2 uppercase">Resolution (Admin)</label>
-                                    <input type="text" id="resolution" placeholder="نتيجة الشكوى..." class="w-full p-3 bg-blue-50 border border-blue-200 rounded-xl outline-none">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-blue-600 mb-2 uppercase">Resolution Status</label>
+                                    <input type="text" id="resolution" placeholder="نتيجة الحل..." class="w-full p-3 bg-blue-50 border border-blue-200 rounded-xl outline-none">
                                 </div>
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-gray-400 mb-2 uppercase">Add Note (Internal)</label>
-                                <input type="text" id="internalNote" placeholder="اكتب ملاحظة داخلية هنا..." class="w-full p-3 bg-gray-50 border rounded-xl outline-none">
                             </div>
                         </div>
 
@@ -94,25 +100,27 @@
                                 <select id="subCat" class="w-full p-3 bg-gray-50 border rounded-xl outline-none"></select>
                             </div>
                             <div>
-                                <label class="block text-[10px] font-bold text-gray-400 mb-2">الفرع (Store)</label>
+                                <label class="block text-[10px] font-bold text-gray-400 mb-2 font-bold">الفرع (Store)</label>
                                 <select id="storeLoc" class="w-full p-3 bg-gray-50 border rounded-xl outline-none">
-                                    <option value="الدقي">الدقي</option><option value="مدينة نصر">مدينة نصر</option>
-                                    <option value="شيراتون">شيراتون</option><option value="سوهاج">سوهاج</option>
+                                    <option value="الدقي">الدقي</option>
+                                    <option value="مدينة نصر">مدينة نصر</option>
+                                    <option value="شيراتون">شيراتون</option>
+                                    <option value="روكسي">روكسي</option>
                                 </select>
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-[10px] font-bold text-gray-400 mb-2 uppercase">وصف العميل (VOC)</label>
+                            <label class="block text-[10px] font-bold text-gray-400 mb-2 uppercase font-bold">وصف العميل (VOC)</label>
                             <textarea id="vocDesc" placeholder="تفاصيل الطلب..." class="w-full p-3 bg-gray-50 border rounded-xl h-24 outline-none focus:border-blue-600 resize-none"></textarea>
                         </div>
 
-                        <button onclick="submitTicket()" id="submitBtn" class="w-full bg-blue-700 text-white p-4 rounded-2xl font-bold hover:bg-blue-800 shadow-xl transition active:scale-95">حفظ وتأكيد</button>
+                        <button onclick="submitTicket()" id="submitBtn" class="w-full bg-blue-700 text-white p-5 rounded-2xl font-black hover:bg-blue-800 shadow-xl transition active:scale-95 text-lg">CONFIRM TICKET</button>
                     </div>
                 </div>
 
                 <div id="searchResults" class="flex-1 space-y-4 max-h-full pr-2 overflow-y-auto custom-scrollbar">
-                    <p class="text-center text-gray-400 mt-20 text-sm">تاريخ العميل سيظهر هنا</p>
+                    <p class="text-center text-gray-300 mt-20 text-sm italic">Search by phone to view history</p>
                 </div>
             </div>
         </section>
@@ -136,7 +144,7 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        let userRole = "employee"; // الافتراضي
+        let userRole = "employee";
         let currentTab = "New Order";
 
         const dataTree = {
@@ -146,17 +154,13 @@
             "Complaint": { subs: ["Product Quality", "Delivery Lateness", "Missing Item", "Wrong Item", "Attitude"], title: "تسجيل شكوى" }
         };
 
-        // فحص صلاحية المستخدم عند الدخول
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const userDoc = await getDoc(doc(db, "users", user.uid));
                 if (userDoc.exists()) {
                     userRole = userDoc.data().role;
                     document.getElementById('userRoleBadge').innerText = userRole;
-                    // إظهار حقول المدير فقط لو كان User هو Admin
-                    if(userRole === 'admin') {
-                        document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'block');
-                    }
+                    if(userRole === 'admin') document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'block');
                 }
                 showPage('mainPage');
                 document.getElementById('userDisp').innerText = user.email;
@@ -166,14 +170,19 @@
             }
         });
 
+        // تم إصلاح المنطق هنا ليتناسب مع ID الزرار الجديد
         window.switchTab = (tab) => {
             currentTab = tab;
             document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('currentPageTitle').innerText = dataTree[tab].title;
-            document.getElementById(`btn-${tab.replace(/\s/g, '')}`).classList.add('active');
             
-            // إظهار/إخفاء حقول الشكاوى الإضافية
-            document.getElementById('complaintFields').style.display = (tab === 'Complaint') ? 'block' : 'none';
+            // إصلاح مسميات الـ IDs لتطابق الـ HTML
+            const btnId = `btn-${tab.replace(/\s/g, '')}`;
+            const btnElement = document.getElementById(btnId);
+            if(btnElement) btnElement.classList.add('active');
+            
+            // إظهار حقل النوت في الشكاوى والمتابعة
+            document.getElementById('topNoteField').style.display = (tab === 'Complaint' || tab === 'Follow-Up Order') ? 'block' : 'none';
 
             const sub = document.getElementById('subCat');
             sub.innerHTML = '';
@@ -183,7 +192,7 @@
         window.handleLogin = async () => {
             const email = document.getElementById('loginEmail').value;
             const pass = document.getElementById('loginPass').value;
-            try { await signInWithEmailAndPassword(auth, email, pass); } catch (e) { alert("خطأ في البيانات"); }
+            try { await signInWithEmailAndPassword(auth, email, pass); } catch (e) { alert("Data Error"); }
         };
 
         window.handleLogout = () => signOut(auth);
@@ -196,61 +205,87 @@
             const note = document.getElementById('internalNote').value;
             const res = document.getElementById('resolution').value;
             const handled = document.getElementById('handledBy').value;
+            const store = document.getElementById('storeLoc').value;
 
-            if(!num || !name) return alert("الرقم والاسم مطلوبين");
+            if(!num || !name) return alert("Required fields missing");
+
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true; btn.innerText = "SAVING...";
 
             try {
                 await addDoc(collection(db, "tickets"), {
                     number: num, name, category: currentTab, subCategory: sub, 
-                    voc, note, resolution: res, handledBy: handled,
+                    voc, note, resolution: res, handledBy: handled, store,
                     createdBy: auth.currentUser.email, timestamp: serverTimestamp()
                 });
-                alert("✅ تم الحفظ");
+                alert("SUCCESS ✅");
                 document.getElementById('custNumber').value = ''; 
+                document.getElementById('custName').value = '';
                 document.getElementById('vocDesc').value = '';
                 document.getElementById('internalNote').value = '';
                 document.getElementById('resolution').value = '';
-            } catch (e) { alert("خطأ في الحفظ"); }
+            } catch (e) { alert("Error Saving Ticket"); }
+            btn.disabled = false; btn.innerText = "CONFIRM TICKET";
         };
 
         window.searchTickets = async () => {
             const phone = document.getElementById('searchMobile').value;
             if(!phone) return;
             const resultsDiv = document.getElementById('searchResults');
-            resultsDiv.innerHTML = '<p class="text-center py-10 animate-pulse text-xs text-gray-400">جاري البحث...</p>';
+            resultsDiv.innerHTML = '<p class="text-center py-10 text-xs text-gray-400">Loading History...</p>';
             
             try {
                 const q = query(collection(db, "tickets"), where("number", "==", phone), orderBy("timestamp", "desc"));
                 const snapshot = await getDocs(q);
                 resultsDiv.innerHTML = '';
-                if(snapshot.empty) return resultsDiv.innerHTML = '<p class="text-center text-red-400 text-xs">لا يوجد نتائج</p>';
+                
+                if(snapshot.empty) return resultsDiv.innerHTML = '<p class="text-center text-red-400 text-xs mt-10">No History Found</p>';
                 
                 snapshot.forEach(doc => {
                     const d = doc.data();
                     resultsDiv.innerHTML += `
-                        <div class="bg-white border-r-4 ${d.category === 'Complaint' ? 'border-red-500' : 'border-blue-600'} p-5 rounded-2xl shadow-sm mb-4">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-[9px] font-black text-blue-600 bg-blue-50 px-2 py-1 rounded">${d.category}</span>
-                                <span class="text-[9px] text-gray-300 font-bold">${d.timestamp?.toDate().toLocaleString('ar-EG')}</span>
-                            </div>
-                            <h4 class="font-bold text-gray-800 text-xs mb-1">${d.subCategory}</h4>
-                            <p class="text-[11px] text-gray-500 bg-gray-50 p-2 rounded-lg italic mb-3">VOC: ${d.voc || '-'}</p>
+                        <div class="bg-white border-t-8 ${d.category === 'Complaint' ? 'border-red-500' : 'border-blue-600'} rounded-3xl shadow-sm mb-6 overflow-hidden">
                             
-                            ${d.note ? `<p class="text-[10px] text-orange-600 font-bold">📝 Note: ${d.note}</p>` : ''}
-                            ${d.resolution ? `<p class="text-[10px] text-green-600 font-bold mt-1">✅ Resolution: ${d.resolution}</p>` : ''}
-                            ${d.handledBy !== 'None' ? `<p class="text-[9px] text-gray-400 mt-2">Handled by: ${d.handledBy}</p>` : ''}
-                            
-                            <div class="flex justify-between text-[9px] font-bold text-gray-300 border-t mt-3 pt-2">
-                                <span>📍 ${d.createdBy}</span>
+                            ${d.note ? `
+                            <div class="bg-yellow-100 p-4 border-b border-yellow-200">
+                                <p class="text-[11px] font-black text-yellow-800 uppercase tracking-tighter flex items-center gap-2">
+                                    📌 Internal Note:
+                                </p>
+                                <p class="text-xs font-bold text-yellow-900 mt-1">${d.note}</p>
+                            </div>` : ''}
+
+                            <div class="p-5">
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="text-[9px] font-black text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">${d.category}</span>
+                                    <span class="text-[9px] text-gray-400 font-bold">${d.timestamp?.toDate().toLocaleString('ar-EG')}</span>
+                                </div>
+                                
+                                <h4 class="font-black text-gray-900 text-sm mb-1 uppercase">${d.subCategory}</h4>
+                                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 mb-3">
+                                    <p class="text-[10px] text-gray-400 font-bold mb-1 uppercase tracking-widest">Customer VOC:</p>
+                                    <p class="text-xs text-gray-700 leading-relaxed">${d.voc || 'No details provided'}</p>
+                                </div>
+                                
+                                ${d.resolution ? `
+                                <div class="bg-green-50 p-3 rounded-xl border border-green-100 mb-3">
+                                    <p class="text-[10px] text-green-600 font-black uppercase mb-1">✅ Final Resolution:</p>
+                                    <p class="text-xs font-bold text-green-800">${d.resolution}</p>
+                                    ${d.handledBy !== 'None' ? `<p class="text-[8px] text-green-400 mt-1 uppercase">Handled by: ${d.handledBy}</p>` : ''}
+                                </div>` : ''}
+                                
+                                <div class="flex justify-between items-center text-[9px] font-black text-gray-400 border-t pt-3 mt-3 border-dashed">
+                                    <span class="flex items-center gap-1">📍 BRANCH: ${d.store || 'N/A'}</span>
+                                    <span class="flex items-center gap-1 italic">BY: ${d.createdBy}</span>
+                                </div>
                             </div>
                         </div>`;
                 });
-            } catch (e) { alert("خطأ في البحث. تأكد من تفعيل الـ Index"); }
+            } catch (e) { alert("Search Error. Check Firebase Index."); }
         };
 
         function showPage(p) {
             document.querySelectorAll('.page').forEach(pg => pg.style.display = 'none');
-            document.getElementById(p).style.display = (p === 'loginPage') ? 'flex' : 'flex';
+            document.getElementById(p).style.display = 'flex';
         }
     </script>
 </body>
