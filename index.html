@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام إدارة العمليات - الإصدار المطور</title>
+    <title>نظام الإدارة المتكامل</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -20,7 +20,7 @@
 
     <div id="loginPage" class="page active w-full items-center justify-center">
         <div class="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-md border">
-            <h2 class="text-3xl font-black text-center mb-8 text-blue-900 italic">SYSTEM LOGIN</h2>
+            <h2 class="text-3xl font-black text-center mb-8 text-blue-900 tracking-tighter">LOGIN SYSTEM</h2>
             <div class="space-y-4">
                 <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" class="w-full p-4 border rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 bg-gray-50">
                 <input type="password" id="loginPass" placeholder="كلمة المرور" class="w-full p-4 border rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 bg-gray-50">
@@ -33,13 +33,13 @@
         
         <aside class="w-64 bg-white shadow-2xl border-l flex flex-col z-10">
             <div class="p-6 border-b text-center bg-blue-900 text-white">
-                <h1 class="text-xl font-black tracking-tighter">DASHBOARD</h1>
-                <p id="userRoleBadge" class="text-[10px] mt-1 text-blue-200 font-bold uppercase tracking-widest"></p>
+                <h1 class="text-xl font-black">DASHBOARD</h1>
+                <p id="userRoleBadge" class="text-[10px] mt-1 text-blue-200 font-bold uppercase"></p>
             </div>
             <nav class="flex-1 p-4 space-y-2 mt-4">
                 <button onclick="switchTab('New Order')" class="sidebar-btn w-full text-right p-4 rounded-xl font-bold flex items-center gap-3 transition" id="btn-NewOrder">➕ طلب جديد</button>
                 <button onclick="switchTab('Inquiry')" class="sidebar-btn w-full text-right p-4 rounded-xl font-bold flex items-center gap-3 transition" id="btn-Inquiry">ℹ️ استفسار</button>
-                <button onclick="switchTab('Follow-Up Order')" class="sidebar-btn w-full text-right p-4 rounded-xl font-bold flex items-center gap-3 transition" id="btn-FollowUpOrder">⏳ متابعة طلب</button>
+                <button onclick="switchTab('Follow-Up Order')" class="sidebar-btn w-full text-right p-4 rounded-xl font-bold flex items-center gap-3 transition" id="btn-Follow-UpOrder">⏳ متابعة طلب</button>
                 <button onclick="switchTab('Complaint')" class="sidebar-btn w-full text-right p-4 rounded-xl font-bold flex items-center gap-3 transition" id="btn-Complaint">⚠️ شكوى</button>
             </nav>
             <div class="p-4 border-t bg-gray-50 flex flex-col gap-2">
@@ -50,9 +50,9 @@
 
         <section class="flex-1 flex flex-col overflow-hidden">
             <header class="bg-white p-4 px-8 shadow-sm flex justify-between items-center border-b">
-                <h2 id="currentPageTitle" class="text-xl font-black text-gray-800">إنشاء طلب جديد</h2>
+                <h2 id="currentPageTitle" class="text-xl font-black text-gray-800 tracking-tight">إنشاء طلب جديد</h2>
                 <div class="flex gap-2">
-                    <input type="tel" id="searchMobile" placeholder="بحث برقم العميل..." class="p-3 border rounded-xl text-xs w-48 outline-none focus:border-blue-600">
+                    <input type="tel" id="searchMobile" placeholder="رقم العميل..." class="p-3 border rounded-xl text-xs w-48 outline-none focus:border-blue-600">
                     <button onclick="searchTickets()" class="bg-blue-900 text-white px-6 rounded-xl text-xs font-bold hover:bg-black transition">بحث</button>
                 </div>
             </header>
@@ -61,66 +61,72 @@
                 <div class="bg-white p-8 rounded-3xl shadow-md border border-gray-100 w-full max-w-2xl h-fit">
                     <div class="space-y-6">
                         
-                        <div id="topNoteField" class="hidden bg-orange-50 p-4 rounded-2xl border border-orange-100">
-                            <label class="block text-[10px] font-bold text-orange-600 mb-2 uppercase italic">Add Internal Note (Top Priority)</label>
-                            <input type="text" id="internalNote" placeholder="اكتب ملاحظة تظهر فوق التيكت..." class="w-full p-3 bg-white border border-orange-200 rounded-xl outline-none focus:ring-2 focus:ring-orange-400">
+                        <div id="topNoteField" class="hidden bg-yellow-50 p-4 rounded-2xl border border-yellow-100">
+                            <label class="block text-[10px] font-black text-yellow-600 mb-2 uppercase">Add Top Note</label>
+                            <input type="text" id="internalNote" placeholder="ملاحظة هامة تظهر في بداية التيكت..." class="w-full p-3 bg-white border border-yellow-200 rounded-xl outline-none focus:ring-2 focus:ring-yellow-400">
                         </div>
 
                         <div class="grid grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-[10px] font-bold text-gray-400 mb-2 uppercase">رقم العميل</label>
-                                <input type="text" id="custNumber" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="ارقام فقط" class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:border-blue-600 font-bold text-lg">
+                                <label class="block text-[10px] font-bold text-gray-400 mb-2">رقم العميل</label>
+                                <input type="text" id="custNumber" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="ارقام فقط" class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:border-blue-600 font-bold">
                             </div>
                             <div>
-                                <label class="block text-[10px] font-bold text-gray-400 mb-2 uppercase">اسم العميل</label>
+                                <label class="block text-[10px] font-bold text-gray-400 mb-2">اسم العميل</label>
                                 <input type="text" id="custName" oninput="this.value = this.value.replace(/[0-9]/g, '')" placeholder="حروف فقط" class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:border-blue-600 font-bold">
                             </div>
                         </div>
 
-                        <div id="adminSection" class="admin-only space-y-4 border-t pt-4">
-                            <div class="grid grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-[10px] font-bold text-blue-600 mb-2 uppercase">Handled By</label>
-                                    <select id="handledBy" class="w-full p-3 bg-blue-50 border border-blue-200 rounded-xl outline-none">
-                                        <option value="None">لم يحدد</option>
-                                        <option value="Ahmed">Ahmed</option>
-                                        <option value="Mahmoud">Mahmoud</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-[10px] font-bold text-blue-600 mb-2 uppercase">Resolution Status</label>
-                                    <input type="text" id="resolution" placeholder="نتيجة الحل..." class="w-full p-3 bg-blue-50 border border-blue-200 rounded-xl outline-none">
-                                </div>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-400 mb-2 px-1">المنتج (Product)</label>
+                                <input type="text" id="productName" placeholder="اسم المنتج" class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-400 mb-2 px-1">الفرع (Store)</label>
+                                <select id="storeLoc" class="w-full p-3 bg-gray-50 border rounded-xl outline-none">
+                                    <option value="الدقي">الدقي</option><option value="مدينة نصر">مدينة نصر</option>
+                                    <option value="المعادي (Hub 50)">المعادي (Hub 50)</option><option value="التجمع الأول">التجمع الأول</option>
+                                    <option value="إسكندرية (سبورتنج)">إسكندرية (سبورتنج)</option><option value="الشيخ زايد">الشيخ زايد</option>
+                                    <option value="شبين الكوم">شبين الكوم</option><option value="إسكندرية (ميامي)">إسكندرية (ميامي)</option>
+                                    <option value="الزمالك">الزمالك</option><option value="المعادي (فيكتوريا)">المعادي (فيكتوريا)</option>
+                                    <option value="جامعة المنصورة">جامعة المنصورة</option><option value="فيصل">فيصل</option>
+                                    <option value="طنطا">طنطا</option><option value="العبور">العبور</option>
+                                    <option value="حدائق أكتوبر">حدائق أكتوبر</option><option value="شيراتون">شيراتون</option>
+                                    <option value="سوهاج">سوهاج</option><option value="روكسي">روكسي</option>
+                                </select>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-[10px] font-bold text-gray-400 mb-2">النوع الفرعي</label>
+                                <label class="block text-[10px] font-bold text-gray-400 mb-2">الفئة الفرعية</label>
                                 <select id="subCat" class="w-full p-3 bg-gray-50 border rounded-xl outline-none"></select>
                             </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-gray-400 mb-2 font-bold">الفرع (Store)</label>
-                                <select id="storeLoc" class="w-full p-3 bg-gray-50 border rounded-xl outline-none">
-                                    <option value="الدقي">الدقي</option>
-                                    <option value="مدينة نصر">مدينة نصر</option>
-                                    <option value="شيراتون">شيراتون</option>
-                                    <option value="روكسي">روكسي</option>
+                            <div class="admin-only">
+                                <label class="block text-[10px] font-bold text-blue-600 mb-2">Handled By</label>
+                                <select id="handledBy" class="w-full p-3 bg-blue-50 border border-blue-100 rounded-xl outline-none">
+                                    <option value="None">لم يحدد</option><option value="Ahmed">Ahmed</option><option value="Mahmoud">Mahmoud</option>
                                 </select>
                             </div>
                         </div>
 
+                        <div class="admin-only">
+                            <label class="block text-[10px] font-bold text-blue-600 mb-2">Resolution</label>
+                            <input type="text" id="resolution" placeholder="أدخل النتيجة النهائية للشكوى..." class="w-full p-3 bg-blue-50 border border-blue-100 rounded-xl outline-none focus:border-blue-500">
+                        </div>
+
                         <div>
-                            <label class="block text-[10px] font-bold text-gray-400 mb-2 uppercase font-bold">وصف العميل (VOC)</label>
+                            <label class="block text-[10px] font-bold text-gray-400 mb-2 uppercase">وصف العميل (VOC)</label>
                             <textarea id="vocDesc" placeholder="تفاصيل الطلب..." class="w-full p-3 bg-gray-50 border rounded-xl h-24 outline-none focus:border-blue-600 resize-none"></textarea>
                         </div>
 
-                        <button onclick="submitTicket()" id="submitBtn" class="w-full bg-blue-700 text-white p-5 rounded-2xl font-black hover:bg-blue-800 shadow-xl transition active:scale-95 text-lg">CONFIRM TICKET</button>
+                        <button onclick="submitTicket()" id="submitBtn" class="w-full bg-blue-700 text-white p-5 rounded-2xl font-black hover:bg-blue-800 shadow-xl transition active:scale-95">CONFIRM TICKET</button>
                     </div>
                 </div>
 
                 <div id="searchResults" class="flex-1 space-y-4 max-h-full pr-2 overflow-y-auto custom-scrollbar">
-                    <p class="text-center text-gray-300 mt-20 text-sm italic">Search by phone to view history</p>
+                    <p class="text-center text-gray-300 mt-20 text-sm italic italic">سجل العميل سيظهر هنا</p>
                 </div>
             </div>
         </section>
@@ -170,14 +176,12 @@
             }
         });
 
-        // تم إصلاح المنطق هنا ليتناسب مع ID الزرار الجديد
         window.switchTab = (tab) => {
             currentTab = tab;
             document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('currentPageTitle').innerText = dataTree[tab].title;
             
-            // إصلاح مسميات الـ IDs لتطابق الـ HTML
-            const btnId = `btn-${tab.replace(/\s/g, '')}`;
+            const btnId = `btn-${tab.replace(/\s/g, '-')}`; // تعديل عشان الـ ID يكون صح
             const btnElement = document.getElementById(btnId);
             if(btnElement) btnElement.classList.add('active');
             
@@ -192,44 +196,46 @@
         window.handleLogin = async () => {
             const email = document.getElementById('loginEmail').value;
             const pass = document.getElementById('loginPass').value;
-            try { await signInWithEmailAndPassword(auth, email, pass); } catch (e) { alert("Data Error"); }
+            try { await signInWithEmailAndPassword(auth, email, pass); } catch (e) { alert("خطأ في البيانات"); }
         };
 
         window.handleLogout = () => signOut(auth);
 
         window.submitTicket = async () => {
-            const num = document.getElementById('custNumber').value;
-            const name = document.getElementById('custName').value;
+            const num = document.getElementById('custNumber').value.trim();
+            const name = document.getElementById('custName').value.trim();
             const sub = document.getElementById('subCat').value;
-            const voc = document.getElementById('vocDesc').value;
-            const note = document.getElementById('internalNote').value;
-            const res = document.getElementById('resolution').value;
+            const voc = document.getElementById('vocDesc').value.trim();
+            const note = document.getElementById('internalNote').value.trim();
+            const res = document.getElementById('resolution').value.trim();
             const handled = document.getElementById('handledBy').value;
             const store = document.getElementById('storeLoc').value;
+            const product = document.getElementById('productName').value.trim();
 
-            if(!num || !name) return alert("Required fields missing");
+            if(!num || !name) return alert("يرجى إدخال البيانات الأساسية");
 
             const btn = document.getElementById('submitBtn');
-            btn.disabled = true; btn.innerText = "SAVING...";
+            btn.disabled = true; btn.innerText = "جاري الحفظ...";
 
             try {
                 await addDoc(collection(db, "tickets"), {
                     number: num, name, category: currentTab, subCategory: sub, 
-                    voc, note, resolution: res, handledBy: handled, store,
+                    voc, note, resolution: res, handledBy: handled, store, product,
                     createdBy: auth.currentUser.email, timestamp: serverTimestamp()
                 });
-                alert("SUCCESS ✅");
+                alert("تم الحفظ بنجاح ✅");
                 document.getElementById('custNumber').value = ''; 
                 document.getElementById('custName').value = '';
                 document.getElementById('vocDesc').value = '';
                 document.getElementById('internalNote').value = '';
                 document.getElementById('resolution').value = '';
-            } catch (e) { alert("Error Saving Ticket"); }
+                document.getElementById('productName').value = '';
+            } catch (e) { alert("حدث خطأ أثناء الحفظ"); }
             btn.disabled = false; btn.innerText = "CONFIRM TICKET";
         };
 
         window.searchTickets = async () => {
-            const phone = document.getElementById('searchMobile').value;
+            const phone = document.getElementById('searchMobile').value.trim();
             if(!phone) return;
             const resultsDiv = document.getElementById('searchResults');
             resultsDiv.innerHTML = '<p class="text-center py-10 text-xs text-gray-400">Loading History...</p>';
@@ -244,38 +250,33 @@
                 snapshot.forEach(doc => {
                     const d = doc.data();
                     resultsDiv.innerHTML += `
-                        <div class="bg-white border-t-8 ${d.category === 'Complaint' ? 'border-red-500' : 'border-blue-600'} rounded-3xl shadow-sm mb-6 overflow-hidden">
-                            
+                        <div class="bg-white border-t-8 ${d.category === 'Complaint' ? 'border-red-500' : 'border-blue-600'} rounded-3xl shadow-md mb-6 overflow-hidden">
                             ${d.note ? `
                             <div class="bg-yellow-100 p-4 border-b border-yellow-200">
-                                <p class="text-[11px] font-black text-yellow-800 uppercase tracking-tighter flex items-center gap-2">
-                                    📌 Internal Note:
-                                </p>
+                                <p class="text-[10px] font-black text-yellow-700 uppercase">📌 IMPORTANT NOTE:</p>
                                 <p class="text-xs font-bold text-yellow-900 mt-1">${d.note}</p>
                             </div>` : ''}
-
                             <div class="p-5">
                                 <div class="flex justify-between items-center mb-3">
                                     <span class="text-[9px] font-black text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">${d.category}</span>
                                     <span class="text-[9px] text-gray-400 font-bold">${d.timestamp?.toDate().toLocaleString('ar-EG')}</span>
                                 </div>
-                                
                                 <h4 class="font-black text-gray-900 text-sm mb-1 uppercase">${d.subCategory}</h4>
-                                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 mb-3">
-                                    <p class="text-[10px] text-gray-400 font-bold mb-1 uppercase tracking-widest">Customer VOC:</p>
-                                    <p class="text-xs text-gray-700 leading-relaxed">${d.voc || 'No details provided'}</p>
+                                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 mb-3 text-[11px]">
+                                    <p class="font-bold text-gray-400 mb-1 uppercase tracking-widest">Details:</p>
+                                    <p class="text-gray-700 mb-1"><b>Name:</b> ${d.name}</p>
+                                    <p class="text-gray-700 mb-1"><b>Product:</b> ${d.product || '-'}</p>
+                                    <p class="text-gray-700"><b>VOC:</b> ${d.voc || 'No details'}</p>
                                 </div>
-                                
                                 ${d.resolution ? `
                                 <div class="bg-green-50 p-3 rounded-xl border border-green-100 mb-3">
                                     <p class="text-[10px] text-green-600 font-black uppercase mb-1">✅ Final Resolution:</p>
                                     <p class="text-xs font-bold text-green-800">${d.resolution}</p>
-                                    ${d.handledBy !== 'None' ? `<p class="text-[8px] text-green-400 mt-1 uppercase">Handled by: ${d.handledBy}</p>` : ''}
+                                    ${d.handledBy !== 'None' ? `<p class="text-[8px] text-green-400 mt-1 uppercase italic">By: ${d.handledBy}</p>` : ''}
                                 </div>` : ''}
-                                
                                 <div class="flex justify-between items-center text-[9px] font-black text-gray-400 border-t pt-3 mt-3 border-dashed">
-                                    <span class="flex items-center gap-1">📍 BRANCH: ${d.store || 'N/A'}</span>
-                                    <span class="flex items-center gap-1 italic">BY: ${d.createdBy}</span>
+                                    <span>📍 BRANCH: ${d.store}</span>
+                                    <span>BY: ${d.createdBy}</span>
                                 </div>
                             </div>
                         </div>`;
