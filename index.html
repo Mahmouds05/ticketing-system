@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام الإدارة المتكامل</title>
+    <title>نظام الإدارة المتكامل V3</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -20,7 +20,7 @@
 
     <div id="loginPage" class="page active w-full items-center justify-center">
         <div class="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-md border">
-            <h2 class="text-3xl font-black text-center mb-8 text-blue-900 tracking-tighter">LOGIN SYSTEM</h2>
+            <h2 class="text-3xl font-black text-center mb-8 text-blue-900 italic uppercase">Log In</h2>
             <div class="space-y-4">
                 <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" class="w-full p-4 border rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 bg-gray-50">
                 <input type="password" id="loginPass" placeholder="كلمة المرور" class="w-full p-4 border rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 bg-gray-50">
@@ -33,13 +33,13 @@
         
         <aside class="w-64 bg-white shadow-2xl border-l flex flex-col z-10">
             <div class="p-6 border-b text-center bg-blue-900 text-white">
-                <h1 class="text-xl font-black">DASHBOARD</h1>
-                <p id="userRoleBadge" class="text-[10px] mt-1 text-blue-200 font-bold uppercase"></p>
+                <h1 class="text-xl font-black tracking-tighter italic">DASHBOARD</h1>
+                <p id="userRoleBadge" class="text-[10px] mt-1 text-blue-200 font-bold uppercase tracking-widest"></p>
             </div>
             <nav class="flex-1 p-4 space-y-2 mt-4">
-                <button onclick="switchTab('New Order')" class="sidebar-btn w-full text-right p-4 rounded-xl font-bold flex items-center gap-3 transition" id="btn-NewOrder">➕ طلب جديد</button>
+                <button onclick="switchTab('New Order')" class="sidebar-btn w-full text-right p-4 rounded-xl font-bold flex items-center gap-3 transition" id="btn-New-Order">➕ طلب جديد</button>
                 <button onclick="switchTab('Inquiry')" class="sidebar-btn w-full text-right p-4 rounded-xl font-bold flex items-center gap-3 transition" id="btn-Inquiry">ℹ️ استفسار</button>
-                <button onclick="switchTab('Follow-Up Order')" class="sidebar-btn w-full text-right p-4 rounded-xl font-bold flex items-center gap-3 transition" id="btn-Follow-UpOrder">⏳ متابعة طلب</button>
+                <button onclick="switchTab('Follow-Up Order')" class="sidebar-btn w-full text-right p-4 rounded-xl font-bold flex items-center gap-3 transition" id="btn-Follow-Up-Order">⏳ متابعة طلب</button>
                 <button onclick="switchTab('Complaint')" class="sidebar-btn w-full text-right p-4 rounded-xl font-bold flex items-center gap-3 transition" id="btn-Complaint">⚠️ شكوى</button>
             </nav>
             <div class="p-4 border-t bg-gray-50 flex flex-col gap-2">
@@ -50,9 +50,9 @@
 
         <section class="flex-1 flex flex-col overflow-hidden">
             <header class="bg-white p-4 px-8 shadow-sm flex justify-between items-center border-b">
-                <h2 id="currentPageTitle" class="text-xl font-black text-gray-800 tracking-tight">إنشاء طلب جديد</h2>
+                <h2 id="currentPageTitle" class="text-xl font-black text-gray-800">إنشاء طلب جديد</h2>
                 <div class="flex gap-2">
-                    <input type="tel" id="searchMobile" placeholder="رقم العميل..." class="p-3 border rounded-xl text-xs w-48 outline-none focus:border-blue-600">
+                    <input type="tel" id="searchMobile" placeholder="رقم الموبايل..." class="p-3 border rounded-xl text-xs w-48 outline-none focus:border-blue-600">
                     <button onclick="searchTickets()" class="bg-blue-900 text-white px-6 rounded-xl text-xs font-bold hover:bg-black transition">بحث</button>
                 </div>
             </header>
@@ -61,18 +61,18 @@
                 <div class="bg-white p-8 rounded-3xl shadow-md border border-gray-100 w-full max-w-2xl h-fit">
                     <div class="space-y-6">
                         
-                        <div id="topNoteField" class="hidden bg-yellow-50 p-4 rounded-2xl border border-yellow-100">
-                            <label class="block text-[10px] font-black text-yellow-600 mb-2 uppercase">Add Top Note</label>
-                            <input type="text" id="internalNote" placeholder="ملاحظة هامة تظهر في بداية التيكت..." class="w-full p-3 bg-white border border-yellow-200 rounded-xl outline-none focus:ring-2 focus:ring-yellow-400">
+                        <div id="topNoteField" class="bg-yellow-50 p-4 rounded-2xl border border-yellow-100">
+                            <label class="block text-[10px] font-black text-yellow-600 mb-2 uppercase tracking-tighter">Add Top Note (Available for all Categories)</label>
+                            <input type="text" id="internalNote" placeholder="ملاحظة تظهر في أعلى التيكت..." class="w-full p-3 bg-white border border-yellow-200 rounded-xl outline-none focus:ring-2 focus:ring-yellow-400">
                         </div>
 
                         <div class="grid grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-[10px] font-bold text-gray-400 mb-2">رقم العميل</label>
-                                <input type="text" id="custNumber" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="ارقام فقط" class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:border-blue-600 font-bold">
+                                <label class="block text-[10px] font-bold text-gray-400 mb-2 uppercase">رقم العميل</label>
+                                <input type="text" id="custNumber" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="ارقام فقط" class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:border-blue-600 font-bold text-lg">
                             </div>
                             <div>
-                                <label class="block text-[10px] font-bold text-gray-400 mb-2">اسم العميل</label>
+                                <label class="block text-[10px] font-bold text-gray-400 mb-2 uppercase">اسم العميل</label>
                                 <input type="text" id="custName" oninput="this.value = this.value.replace(/[0-9]/g, '')" placeholder="حروف فقط" class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:border-blue-600 font-bold">
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                                 <input type="text" id="productName" placeholder="اسم المنتج" class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:border-blue-500">
                             </div>
                             <div>
-                                <label class="block text-[10px] font-bold text-gray-400 mb-2 px-1">الفرع (Store)</label>
+                                <label class="block text-[10px] font-bold text-gray-400 mb-2 px-1 font-bold">الفرع (Store)</label>
                                 <select id="storeLoc" class="w-full p-3 bg-gray-50 border rounded-xl outline-none">
                                     <option value="الدقي">الدقي</option><option value="مدينة نصر">مدينة نصر</option>
                                     <option value="المعادي (Hub 50)">المعادي (Hub 50)</option><option value="التجمع الأول">التجمع الأول</option>
@@ -103,30 +103,32 @@
                                 <label class="block text-[10px] font-bold text-gray-400 mb-2">الفئة الفرعية</label>
                                 <select id="subCat" class="w-full p-3 bg-gray-50 border rounded-xl outline-none"></select>
                             </div>
-                            <div class="admin-only">
-                                <label class="block text-[10px] font-bold text-blue-600 mb-2">Handled By</label>
-                                <select id="handledBy" class="w-full p-3 bg-blue-50 border border-blue-100 rounded-xl outline-none">
-                                    <option value="None">لم يحدد</option><option value="Ahmed">Ahmed</option><option value="Mahmoud">Mahmoud</option>
+                            <div id="handledByField" class="admin-only" style="display: none;">
+                                <label class="block text-[10px] font-bold text-blue-600 mb-2 uppercase">Handled By</label>
+                                <select id="handledBy" class="w-full p-3 bg-blue-50 border border-blue-100 rounded-xl outline-none font-bold">
+                                    <option value="None">لم يحدد</option>
+                                    <option value="Ahmed">Ahmed</option>
+                                    <option value="Mahmoud">Mahmoud</option>
                                 </select>
                             </div>
                         </div>
 
-                        <div class="admin-only">
-                            <label class="block text-[10px] font-bold text-blue-600 mb-2">Resolution</label>
-                            <input type="text" id="resolution" placeholder="أدخل النتيجة النهائية للشكوى..." class="w-full p-3 bg-blue-50 border border-blue-100 rounded-xl outline-none focus:border-blue-500">
+                        <div id="resolutionField" class="admin-only" style="display: none;">
+                            <label class="block text-[10px] font-bold text-blue-600 mb-2 uppercase">Final Resolution (Admin Only)</label>
+                            <input type="text" id="resolution" placeholder="أدخل النتيجة النهائية..." class="w-full p-3 bg-blue-50 border border-blue-100 rounded-xl outline-none">
                         </div>
 
                         <div>
-                            <label class="block text-[10px] font-bold text-gray-400 mb-2 uppercase">وصف العميل (VOC)</label>
+                            <label class="block text-[10px] font-bold text-gray-400 mb-2 uppercase font-bold">وصف العميل (VOC)</label>
                             <textarea id="vocDesc" placeholder="تفاصيل الطلب..." class="w-full p-3 bg-gray-50 border rounded-xl h-24 outline-none focus:border-blue-600 resize-none"></textarea>
                         </div>
 
-                        <button onclick="submitTicket()" id="submitBtn" class="w-full bg-blue-700 text-white p-5 rounded-2xl font-black hover:bg-blue-800 shadow-xl transition active:scale-95">CONFIRM TICKET</button>
+                        <button onclick="submitTicket()" id="submitBtn" class="w-full bg-blue-700 text-white p-5 rounded-2xl font-black hover:bg-blue-800 shadow-xl transition active:scale-95 text-xl">CONFIRM & VIEW</button>
                     </div>
                 </div>
 
                 <div id="searchResults" class="flex-1 space-y-4 max-h-full pr-2 overflow-y-auto custom-scrollbar">
-                    <p class="text-center text-gray-300 mt-20 text-sm italic italic">سجل العميل سيظهر هنا</p>
+                    <p class="text-center text-gray-300 mt-20 text-sm italic">Newly created ticket will appear here automatically</p>
                 </div>
             </div>
         </section>
@@ -166,7 +168,6 @@
                 if (userDoc.exists()) {
                     userRole = userDoc.data().role;
                     document.getElementById('userRoleBadge').innerText = userRole;
-                    if(userRole === 'admin') document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'block');
                 }
                 showPage('mainPage');
                 document.getElementById('userDisp').innerText = user.email;
@@ -181,12 +182,16 @@
             document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('currentPageTitle').innerText = dataTree[tab].title;
             
-            const btnId = `btn-${tab.replace(/\s/g, '-')}`; // تعديل عشان الـ ID يكون صح
+            // إصلاح شامل لحركة البار الجانبي
+            const btnId = `btn-${tab.replace(/\s/g, '-')}`;
             const btnElement = document.getElementById(btnId);
             if(btnElement) btnElement.classList.add('active');
             
-            // إظهار حقل النوت في الشكاوى والمتابعة
-            document.getElementById('topNoteField').style.display = (tab === 'Complaint' || tab === 'Follow-Up Order') ? 'block' : 'none';
+            // Handled By & Resolution: تظهر للمدير فقط وفي حالة الشكاوي فقط
+            const isAdmin = userRole === 'admin';
+            const isComplaint = tab === 'Complaint';
+            document.getElementById('handledByField').style.display = (isAdmin && isComplaint) ? 'block' : 'none';
+            document.getElementById('resolutionField').style.display = (isAdmin && isComplaint) ? 'block' : 'none';
 
             const sub = document.getElementById('subCat');
             sub.innerHTML = '';
@@ -196,7 +201,7 @@
         window.handleLogin = async () => {
             const email = document.getElementById('loginEmail').value;
             const pass = document.getElementById('loginPass').value;
-            try { await signInWithEmailAndPassword(auth, email, pass); } catch (e) { alert("خطأ في البيانات"); }
+            try { await signInWithEmailAndPassword(auth, email, pass); } catch (e) { alert("Login failed"); }
         };
 
         window.handleLogout = () => signOut(auth);
@@ -212,10 +217,10 @@
             const store = document.getElementById('storeLoc').value;
             const product = document.getElementById('productName').value.trim();
 
-            if(!num || !name) return alert("يرجى إدخال البيانات الأساسية");
+            if(!num || !name) return alert("Number and Name are required");
 
             const btn = document.getElementById('submitBtn');
-            btn.disabled = true; btn.innerText = "جاري الحفظ...";
+            btn.disabled = true; btn.innerText = "Processing...";
 
             try {
                 await addDoc(collection(db, "tickets"), {
@@ -223,29 +228,35 @@
                     voc, note, resolution: res, handledBy: handled, store, product,
                     createdBy: auth.currentUser.email, timestamp: serverTimestamp()
                 });
-                alert("تم الحفظ بنجاح ✅");
+
+                // 1. مسح الفورم
                 document.getElementById('custNumber').value = ''; 
                 document.getElementById('custName').value = '';
                 document.getElementById('vocDesc').value = '';
                 document.getElementById('internalNote').value = '';
                 document.getElementById('resolution').value = '';
                 document.getElementById('productName').value = '';
-            } catch (e) { alert("حدث خطأ أثناء الحفظ"); }
-            btn.disabled = false; btn.innerText = "CONFIRM TICKET";
+
+                // 2. البحث التلقائي عن التيكت الجديد وفتحه
+                document.getElementById('searchMobile').value = num;
+                await searchTickets();
+
+            } catch (e) { console.error(e); }
+            btn.disabled = false; btn.innerText = "CONFIRM & VIEW";
         };
 
         window.searchTickets = async () => {
             const phone = document.getElementById('searchMobile').value.trim();
             if(!phone) return;
             const resultsDiv = document.getElementById('searchResults');
-            resultsDiv.innerHTML = '<p class="text-center py-10 text-xs text-gray-400">Loading History...</p>';
+            resultsDiv.innerHTML = '<div class="text-center py-20 animate-pulse text-gray-300">Fetching Record...</div>';
             
             try {
                 const q = query(collection(db, "tickets"), where("number", "==", phone), orderBy("timestamp", "desc"));
                 const snapshot = await getDocs(q);
                 resultsDiv.innerHTML = '';
                 
-                if(snapshot.empty) return resultsDiv.innerHTML = '<p class="text-center text-red-400 text-xs mt-10">No History Found</p>';
+                if(snapshot.empty) return resultsDiv.innerHTML = '<p class="text-center text-red-400 text-xs mt-10">Empty Log</p>';
                 
                 snapshot.forEach(doc => {
                     const d = doc.data();
@@ -253,35 +264,32 @@
                         <div class="bg-white border-t-8 ${d.category === 'Complaint' ? 'border-red-500' : 'border-blue-600'} rounded-3xl shadow-md mb-6 overflow-hidden">
                             ${d.note ? `
                             <div class="bg-yellow-100 p-4 border-b border-yellow-200">
-                                <p class="text-[10px] font-black text-yellow-700 uppercase">📌 IMPORTANT NOTE:</p>
+                                <p class="text-[10px] font-black text-yellow-700">📌 NOTE:</p>
                                 <p class="text-xs font-bold text-yellow-900 mt-1">${d.note}</p>
                             </div>` : ''}
                             <div class="p-5">
                                 <div class="flex justify-between items-center mb-3">
-                                    <span class="text-[9px] font-black text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">${d.category}</span>
+                                    <span class="text-[9px] font-black text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-100 uppercase">${d.category}</span>
                                     <span class="text-[9px] text-gray-400 font-bold">${d.timestamp?.toDate().toLocaleString('ar-EG')}</span>
                                 </div>
                                 <h4 class="font-black text-gray-900 text-sm mb-1 uppercase">${d.subCategory}</h4>
                                 <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 mb-3 text-[11px]">
-                                    <p class="font-bold text-gray-400 mb-1 uppercase tracking-widest">Details:</p>
-                                    <p class="text-gray-700 mb-1"><b>Name:</b> ${d.name}</p>
+                                    <p class="text-gray-700 mb-1"><b>Client:</b> ${d.name}</p>
                                     <p class="text-gray-700 mb-1"><b>Product:</b> ${d.product || '-'}</p>
-                                    <p class="text-gray-700"><b>VOC:</b> ${d.voc || 'No details'}</p>
+                                    <p class="text-gray-700"><b>VOC:</b> ${d.voc || '...'}</p>
                                 </div>
                                 ${d.resolution ? `
-                                <div class="bg-green-50 p-3 rounded-xl border border-green-100 mb-3">
-                                    <p class="text-[10px] text-green-600 font-black uppercase mb-1">✅ Final Resolution:</p>
-                                    <p class="text-xs font-bold text-green-800">${d.resolution}</p>
-                                    ${d.handledBy !== 'None' ? `<p class="text-[8px] text-green-400 mt-1 uppercase italic">By: ${d.handledBy}</p>` : ''}
+                                <div class="bg-green-50 p-3 rounded-xl border border-green-100 mb-2 font-bold text-xs text-green-800">
+                                    ✅ ${d.resolution} ${d.handledBy !== 'None' ? `(By: ${d.handledBy})` : ''}
                                 </div>` : ''}
-                                <div class="flex justify-between items-center text-[9px] font-black text-gray-400 border-t pt-3 mt-3 border-dashed">
-                                    <span>📍 BRANCH: ${d.store}</span>
+                                <div class="flex justify-between items-center text-[9px] font-black text-gray-300 border-t pt-3 mt-3 border-dashed">
+                                    <span>📍 ${d.store}</span>
                                     <span>BY: ${d.createdBy}</span>
                                 </div>
                             </div>
                         </div>`;
                 });
-            } catch (e) { alert("Search Error. Check Firebase Index."); }
+            } catch (e) { console.error(e); }
         };
 
         function showPage(p) {
